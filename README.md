@@ -35,7 +35,9 @@ Cells(NextRow, 8).Value = OMAIL.TaskSubject
 Cells(NextRow, 3).Value = OMAIL.CreationTime
 
 Worksheets("Morning Health Check Dashboard").Rows(3).Insert Shift:=xlShiftDown, CopyOrigin:=xlFormatFromRightOrBelow
+Worksheets("Morning Health Check Dashboard").Cells(3, 1).Value = OMAIL.ReceivedTime
 NextRow = NextRow + 1
+
 Next OMAIL
 
 Set MYFOL = ONS.GetDefaultFolder(olFolderInbox).Folders("AQA new")
@@ -51,4 +53,3 @@ Next OMAIL
 
 
 End Sub
-
