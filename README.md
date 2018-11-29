@@ -11,6 +11,7 @@ Set ONS = O.GetNamespace("MAPI")
 Dim MYFOL As Outlook.Folder
 Set MYFOL = ONS.GetDefaultFolder(olFolderInbox).Folders("alerts")
 
+' "411", "911", "AQA Alert", and "Morning" are sub-folders of the folder "alerts", which is a sub-folder of "Inbox"
 Dim SubFolder411 As MAPIFolder
 Set SubFolder411 = MYFOL.Folders("411")
 
@@ -32,7 +33,10 @@ Set OMAIL = O.CreateItem(olMailItem)
 
 Dim NextRow As Long
 With ActiveSheet
+' "NextRow" allows you to paste to the next available row in excel
 NextRow = Cells(Rows.Count, 1).End(xlUp).Row + 1
+
+' If the email is unread, then it pastes the date , body, and time the email was sent to the corresponding columns
 
 If SubFolder411.Items.Restrict("[UnRead]=True").Count > 0 Then
     
@@ -93,6 +97,7 @@ Cells(NextRow, 2).Value = OMAIL.ReceivedTime
 Cells(NextRow, 8).Value = OMAIL.TaskSubject
 Cells(NextRow, 3).Value = OMAIL.CreationTime
 
+'This inserts a row above thr 3rd row in another worksheet called "Morning Health Check Dashboard" each time an email is being imported from the folder
 Worksheets("Morning Health Check Dashboard").Rows(3).Insert Shift:=xlShiftDown, CopyOrigin:=xlFormatFromRightOrBelow
 Worksheets("Morning Health Check Dashboard").Cells(3, 1).Value = OMAIL.ReceivedTime
 NextRow = NextRow + 1
